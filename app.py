@@ -46,6 +46,16 @@ def generateMarkersScript(locations):
     return script
 
 
+# Function to generate the sidebar HTML with Zillow links
+def generateSidebar(locations):
+    sidebar = ''
+    for i, location in enumerate(locations):
+        address = location['address']
+        zillow_link = f'https://www.zillow.com/homes/{address}'
+        sidebar += f"<div class='address'><a href='{zillow_link}' target='_blank'>{address}</a></div>\n"
+    return sidebar
+
+
 # Iterate over the addresses and place a marker on the image
 locations = []
 for address in addresses:
@@ -65,7 +75,7 @@ for address in addresses:
         draw.ellipse([(x - 5, y - 5), (x + 5, y + 5)], outline=(255, 0, 0))
 
         # Store the location data
-        locations.append({'lat': latitude, 'lng': longitude})
+        locations.append({'lat': latitude, 'lng': longitude, 'address': address})
 
 # Save the final image
 image.save('output.png')
@@ -77,14 +87,57 @@ html = f'''
 <head>
     <title>Geocoded Addresses</title>
     <style>
+        body {{
+            display: flex;
+            flex-direction: row;
+            font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace; 
+            font-size: .75rem;
+            margin: 0;
+            padding: 0;
+        }}
+
+        a {{
+            color: #337ab7;
+            text-decoration: none;
+        }}
+
+        a:hover {{
+            color: #337ab7;
+            font-weight: bold;
+            font-size: 1em;
+        }}
+
         #map {{
+            flex: 1;
             height: 600px;
             width: 800px;
+        }}
+
+        #sidebar {{
+            width: 200px;
+            height: 600px;
+            overflow-y: scroll;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+
+        .address {{
+            padding: 1em;
+        }}
+        .address:nth-child(even) {{
+            background-color: #fcfcfc;
+        }}
+
+        .address:nth-child(odd) {{
+            background-color: #ccc;
         }}
     </style>
 </head>
 <body>
     <div id="map"></div>
+    <div id="sidebar">
+        {generateSidebar(locations)}
+    </div>
     <script>
         function initMap() {{
             var map = new google.maps.Map(document.getElementById('map'), {{
@@ -95,13 +148,10 @@ html = f'''
             {generateMarkersScript(locations)}
         }}
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={os.getenv("GOOGLE_MAPS_API_KEY")}&callback=initMap" async defer></script>
 </body>
 </html>
 '''
-
-# Replace 'YOUR_API_KEY' with your actual Google Maps API key in the HTML code
-html = html.replace('YOUR_API_KEY', os.getenv("GOOGLE_MAPS_API_KEY"))
 
 # Save the HTML file
 with open('map.html', 'w') as f:
