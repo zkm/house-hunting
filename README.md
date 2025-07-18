@@ -1,60 +1,115 @@
+
 # House Hunting App
 
-The House Hunting App is a Python application that allows you to geocode a list of addresses and display them on a map using the Geocodio API and Google Maps API.
+The House Hunting App is a Python application that geocodes a list of addresses and displays them on both a static image and an interactive Google Map. It uses the **Geocodio API** for geocoding and the **Google Maps JavaScript API** for interactive visualization.
 
-## Prerequisites
+---
 
-Before running the app, make sure you have the following:
+## 🚀 Features
 
-- Python 3.6 or higher installed
-- API keys for Geocodio and Google Maps
+- Converts addresses to geographic coordinates using Geocodio  
+- Overlays custom markers on a static image map  
+- Generates a styled interactive map with clickable Zillow links  
+- Outputs both a `.png` image and an `.html` map
 
-## Installation
+---
 
-1. Clone the repository:
+## 📦 Prerequisites
+
+Before running the app, make sure you have:
+
+- Python 3.6 or higher
+- API keys for:
+  - [Geocodio](https://www.geocod.io/)
+  - [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+---
+
+## 🔧 Installation
+
+1. **Clone the repository**
 
    ```bash
    git clone <repository_url>
-
-2. Install the required packages using pip:
-   ```bash
-   pip install -r requirements.txt
-
-3. Replace the placeholders in the .env file with your actual API keys:
-   ```bash
-    GEOCODING_API_KEY=<your_geocodio_api_key>
-    GOOGLE_MAPS_API_KEY=<your_google_maps_api_key>
-
-## Usage
-1. Add the addresses you want to geocode to the address.json file. The file should contain an array of address strings.
-
-2. Run the app:
-   ```bash
-   python app.py
-
-3. The geocoded addresses will be displayed in the terminal, and a map with markers will be saved as output.html.
-
-## File Structure
-The file structure of the project should look like this:
-   ```bash
-   .
-   ├── app.py
-   ├── address.json
-   ├── marker.png
-   ├── output.html
-   ├── requirements.txt
-   └── .env
-   
-   * app.py: The main Python script that geocodes the addresses and generates the map.
-   * address.json: JSON file containing the list of addresses to geocode.
-   * marker.png: Image file of the marker to be placed on the map.
-   * output.html: The generated HTML file displaying the map with markers.
-   * requirements.txt: Text file specifying the required Python packages.
-   * .env: Environment file containing the API keys.
+   cd house-hunting
    ```
 
-## License
+2. **(Optional) Create a virtual environment**
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
-Feel free to modify the file as needed and include any additional information you want to provide to users.
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
+3. **Install dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   pip install python-dotenv
+   ```
+
+4. **Set your API keys in a `.env` file**
+
+   Create a file called `.env` and add the following:
+
+   ```env
+   GEOCODING_API_KEY=your_geocodio_api_key
+   GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+   ```
+
+---
+
+## ▶️ Usage
+
+1. **Edit `address.json`**
+
+   Add the addresses you want to geocode. Example:
+
+   ```json
+   [
+     "1600 Pennsylvania Ave NW, Washington, DC 20500",
+     "1 Infinite Loop, Cupertino, CA 95014"
+   ]
+   ```
+
+2. **Run the application**
+
+   ```bash
+   python app.py
+   ```
+
+3. **View the outputs**
+
+   - A static image map will be saved as `output.png`
+   - An interactive map will be saved as `map.html` — open it in a browser
+
+4. **Open the map**
+
+   After running the script, open `map.html` in your web browser to view the interactive map:
+
+   ```bash
+   xdg-open map.html    # Linux
+   open map.html        # macOS
+   start map.html       # Windows
+
+---
+
+## 📁 File Structure
+
+```bash
+.
+├── address.json         # List of input addresses
+├── app.py               # Main Python script
+├── env.txt              # (optional) Environment variable placeholder
+├── LICENSE              # MIT license
+├── map.html             # Generated interactive map with markers
+├── marker.png           # Custom marker image for plotting
+├── output.png           # Generated static image with plotted markers
+├── README.md            # You're reading it!
+├── requirements.txt     # Python dependencies
+└── .env                 # API keys (not committed to Git)
+```
+
+## 📝 License
+
+This project is licensed under the MIT License. See the [MIT License](https://github.com/zkm/house-hunting?tab=MIT-1-ov-file) file for details.
