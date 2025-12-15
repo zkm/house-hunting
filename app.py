@@ -7,6 +7,9 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+# Create output directory if it doesn't exist
+os.makedirs('output', exist_ok=True)
+
 # Load the list of addresses from address.json
 with open('address.json') as f:
     addresses = json.load(f)
@@ -23,16 +26,20 @@ def geocode(address):
     api_key = os.getenv("GEOCODING_API_KEY")
     url = f'https://api.geocod.io/v1.7/geocode?q={address}&api_key={api_key}'
 
-    response = requests.get(url)
-    data = response.json()
-    print(data)  # Print the data for debugging purposes
+    try:
+        response = requests.get(url, timeout=5)
+        data = response.json()
+        print(data)  # Print the data for debugging purposes
 
-    results = data.get('results')
-    if results:
-        latitude = results[0]['location']['lat']
-        longitude = results[0]['location']['lng']
-        return latitude, longitude
-    else:
+        results = data.get('results')
+        if results:
+            latitude = results[0]['location']['lat']
+            longitude = results[0]['location']['lng']
+            return latitude, longitude
+        else:
+            return None, None
+    except Exception as e:
+        print(f"Error geocoding {address}: {e}")
         return None, None
 
 
@@ -78,9 +85,18 @@ for address in addresses:
         locations.append({'lat': latitude, 'lng': longitude, 'address': address})
 
 # Save the final image
-image.save('output.png')
+image.save('output/output.png')
+print(f"Image saved with {len(locations)} locations")
 
 # Generate the HTML file
+if locations:
+    center_lat = locations[0]['lat']
+    center_lng = locations[0]['lng']
+else:
+    # Default to center of US
+    center_lat = 39.8283
+    center_lng = -98.5795
+
 html = f'''
 <!DOCTYPE html>
 <html>
@@ -141,7 +157,7 @@ html = f'''
     <script>
         function initMap() {{
             var map = new google.maps.Map(document.getElementById('map'), {{
-                center: {{ lat: {locations[0]['lat']}, lng: {locations[0]['lng']} }},
+                center: {{ lat: {center_lat}, lng: {center_lng} }},
                 zoom: 8
             }});
 
@@ -154,5 +170,6 @@ html = f'''
 '''
 
 # Save the HTML file
-with open('map.html', 'w') as f:
+with open('output/map.html', 'w') as f:
     f.write(html)
+print("HTML map saved")

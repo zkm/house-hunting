@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  house-hunting:
+    build: .
+    container_name: house-hunting-app
+    env_file:
+      - .env
+    volumes:
+      - ./address.json:/app/address.json
+      - ./map.html:/app/map.html
+      - ./output:/app/output
+    ports:
+      - "8000:8000"
+    network_mode: host
