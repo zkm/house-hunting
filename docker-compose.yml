@@ -7,9 +7,8 @@ services:
     env_file:
       - .env
     volumes:
-      - ./address.json:/app/address.json
-      - ./map.html:/app/map.html
-      - ./output:/app/output
+      - ./address.json:/app/address.json:z
+      - ./output:/app/output:z
     ports:
       - "8000:8000"
     network_mode: host
