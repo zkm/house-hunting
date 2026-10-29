@@ -26,7 +26,7 @@ The House Hunting App is a Python application that geocodes a list of addresses 
 
 Before running the app, make sure you have:
 
-- Python 3.6 or higher
+- Python 3.10 or higher
 - API keys for:
   - [Geocodio](https://www.geocod.io/)
   - [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/get-api-key)
