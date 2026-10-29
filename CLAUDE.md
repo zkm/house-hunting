@@ -35,7 +35,7 @@ flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 ```
 
-CI (`.github/workflows/ci.yml`) runs this lint plus `pytest` on Python 3.9/3.10/3.11 for every push/PR to `main`/`develop`. There are no test files in this repo yet, and pytest runs with `continue-on-error: true`, so the test step currently passes vacuously.
+CI (`.github/workflows/ci.yml`) runs this lint plus `pytest` on Python 3.10/3.11 for every push/PR to `main`/`develop`. There are no test files in this repo yet, and pytest runs with `continue-on-error: true`, so the test step currently passes vacuously.
 
 Run via Docker:
 ```bash

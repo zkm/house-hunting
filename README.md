@@ -4,7 +4,7 @@
 [![CI](https://github.com/zkm/house-hunting/actions/workflows/ci.yml/badge.svg)](https://github.com/zkm/house-hunting/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-![Python 3.9–3.11](https://img.shields.io/badge/Python-3.9%E2%80%933.11-3776AB?logo=python&logoColor=white)
+![Python 3.10–3.11](https://img.shields.io/badge/Python-3.10%E2%80%933.11-3776AB?logo=python&logoColor=white)
 ![Geocodio](https://img.shields.io/badge/Geocodio-5A5A5A)
 ![Google Maps](https://img.shields.io/badge/Google%20Maps-4285F4?logo=googlemaps&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
